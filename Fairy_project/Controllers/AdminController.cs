@@ -33,7 +33,7 @@ namespace Fairy_project.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreatExhibition(CreatExhibitionViewModel model)
+        public IActionResult CreatExhibition(CreatExhibitionViewModel model)
         {
             Exhibition exhibition = new Exhibition();
             Booths booths = new Booths();
@@ -47,11 +47,27 @@ namespace Fairy_project.Controllers
             exhibition.ex_totalImcome = model.ex_totalImcome;
             exhibition.ticket_Peice = model.ticket_Peice;
             _context.exhibitions.Add(exhibition);
-            //for (int i=0;i<model.setboothslist.Count;i++)
+            //for (int i = 0; i < model.setboothslist.Count; i++)
             //{
-            //    for (int j = 0; j < model.setboothslist[i].boothsum;j++)
+            //    for (int j = 0; j < model.setboothslist[i].boothsum; j++)
             //    {
-
+            //        booths.boothNumber = j + 1;
+            //        booths.e_Id = 0;
+            //        booths.boothState = 0;
+            //        if (model.setboothslist[i].boothLv == "大型")
+            //        {
+            //            booths.boothLv = 3;
+            //        }
+            //        else if (model.setboothslist[i].boothLv == "中型")
+            //        {
+            //            booths.boothLv = 2;
+            //        }
+            //        else if (model.setboothslist[i].boothLv == "小型")
+            //        {
+            //            booths.boothLv = 1;
+            //        }
+            //        booths.boothPrice = model.setboothslist[i].boothPrice;
+            //        _context.boothMaps.Add(booths);
             //    }
             //}
             _context.SaveChanges();

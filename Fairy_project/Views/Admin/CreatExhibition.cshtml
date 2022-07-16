@@ -13,9 +13,9 @@
                     </a>
                 </div>
                 <div class="col-lg-10 col-sm-8 col-6 p-0 text-start">
-                    <input asp-for="exhibitName" id="titleinput" type="text"
-                       class="my-3 py-3 mx-3 border-0 rounded-3 col-11 h1 text-center mx-0 bg2" value=""
-                       placeholder="輸入標題" autocomplete="off" disabled>
+                    <input asp-for="exhibitName" name="exhibitName" id="titleinput" type="text"
+                       class="my-3 py-3 mx-3 border-0 rounded-3 col-11 h1 text-center mx-0 bg2"
+                       placeholder="輸入標題" autocomplete="off" value="321">
                 </div>
                 <span class="col-lg-1 col-sm-2 col-2 badge bg-danger text-black fs-3 py-4">規劃</span>
             </div>
@@ -65,7 +65,7 @@
             </div>
             <div class="row align-items-center my-5">
                 <div class="col-12 rounded-3 position-relative text-center border bg1">
-                    <textarea asp-for="ex_description" id="contentinput" class="col-11 h3 rounded-3 border-0 my-5 bg1" rows="15"
+                    <textarea asp-for="ex_description" name="ex_description" id="contentinput" class="col-11 h3 rounded-3 border-0 my-5 bg1" rows="15"
                           placeholder="輸入詳細" disabled></textarea>
                     <a href="" id="editcontent" class="text-reset">
                         <i class="fa-regular fa-pen-to-square fa-3x m-2 p-2 rounded-3 opacity-75 position-absolute bottom-0 end-0"
@@ -97,7 +97,7 @@
                     </div>
                     <div class="col-xl-3 col-lg-4 col-md-10 col-sm-12 col-12 bg2 d-flex flex-column text-center p-lg-5 p-sm-3 m-lg-5 m-sm-3 p-3 m-3 rounded-3">
                         <h2 class="m-3 fw-bold">門票價格</h2>
-                        <input asp-for="ticket_Peice" id="ticketpriceinput" type="number"
+                        <input asp-for="ticket_Peice" name="ticket_Peice" id="ticketpriceinput" type="number"
                            class="h1 text-center border-0 border-secondary border-bottom fw-bold my-3 py-2 bg2"
                            disabled autocomplete="off"></input>
                         <div class="d-flex justify-content-center flex-wrap">
@@ -128,6 +128,29 @@
                     <h3 class="col-lg-3 col-sm-6 col-12 m-0">攤位價格</h3>
                     <h3 class="col-lg-3 col-sm-6 col-12 m-0">攤位數量</h3>
                 </div>
+@*                <div class="col-10 my-3 py-3 d-flex rounded-pill align-items-center text-center rounded-3 bg2">
+                    <button class="w-25 btn px-0 rounded-pill bg2 d-flex justify-content-center"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <input asp-for="setboothslist[0].boothLv" class="w-75 text-center border-0 h3 m-0 bg2 c1" value="攤位等級" disabled></input>>
+                        <i class="fa-solid fa-chevron-down fa-lg opacity-75 ms-2 mt-3"></i>
+                    </button>
+                    <ul class="dropdown-menu ms-5 text-center p-0">
+                        <li><a class="dropdown-item h4 m-0" href="#">大型</a></li>
+                        <li><a class="dropdown-item h4 m-0" href="#">中型</a></li>
+                        <li><a class="dropdown-item h4 m-0" href="#">小型</a></li>
+                    </ul>
+                    <h3 class="w-25 m-0"></h3>
+                    <div class="w-25">
+                        <input id="test"
+                           class="w-50 text-center h4 m-0 border-0 border-secondary border-bottom py-2 bg2"
+                           placeholder="輸入價格" autocomplete="off"></input>
+                    </div>
+                    <div class="w-25">
+                        <input class="w-50 text-center h4 m-0 border-0 border-secondary border-bottom py-2 bg2"
+                           placeholder="輸入數量" autocomplete="off"></input>
+                    </div>
+                </div>
+*@
                 <div class="col-10 my-3 py-3 d-flex rounded-pill align-items-center text-center rounded-3 bg2">
                     <a id="addbooth" href="#" class="w-100 h-100 border-0 text-reset bg2">
                         <i class="w-100 h-100 fa-solid fa-plus fa-3x "></i>
@@ -163,16 +186,12 @@
             e.preventDefault()
         })
 
-        $('#edittitle').on('click', (e) => {
-            $('#titleinput').removeAttr('disabled').trigger('focus')
-        })
-
         $('#titleinput').on('focus', (e) => {
             $(e.target).removeClass('text-center')
         })
 
         $('#titleinput').on('blur', (e) => {
-            $(e.target).addClass('text-center').attr('disabled', 'disabled')
+            $(e.target).addClass('text-center')
         })
 
         $('#ticketimginput').on('change', (e) => {
@@ -209,6 +228,8 @@
 
         $('#contentinput').on('blur', (e) => {
             $(e.target).attr('disabled', 'disabled').toggleClass('bg1').parent().toggleClass('bg1').toggleClass('border-secondary');
+            console.log(e.target.value)
+
         })
 
         $('#ticketreportshow').on('click', (e) => {
@@ -237,6 +258,7 @@
                     $(e.target).removeClass('text-danger').addClass('text-success')
                 }
             }
+            console.log(e.target.value)
         })
 
         $('#ticketpriceinput').on('blur', (e) => {
@@ -267,7 +289,7 @@
 
         var boothsum = 0;
         $('#addbooth').on('click', (e) => {
-            $(e.target).closest('div').before(`<div class="col-10 my-3 py-3 d-flex rounded-pill align-items-center text-center rounded-3 bg2"><button class="w-25 btn px-0 rounded-pill bg2 d-flex justify-content-center" data-bs-toggle="dropdown" aria-expanded="false"><input asp-for="setboothslist[${boothsum}].boothLv" class="w-75 text-center border-0 h3 m-0 bg2 c1" value="攤位等級" disabled></input><i class="fa-solid fa-chevron-down fa-lg opacity-75 ms-2 mt-3"></i></button><ul class="dropdown-menu ms-5 text-center p-0"><li><a class="dropdown-item h4 m-0" href="#">大型</a></li><li><a class="dropdown-item h4 m-0" href="#">中型</a></li><li><a class="dropdown-item h4 m-0" href="#">小型</a></li></ul><h3 class="w-25 m-0"></h3><div class="w-25"><input class="w-50 text-center h4 m-0 border-0 border-secondary border-bottom py-2 bg2"placeholder="輸入價格" type="number" autocomplete="off"></input></div><div class="w-25"><input class="w-50 text-center h4 m-0 border-0 border-secondary border-bottom py-2 bg2"placeholder="輸入價格" type="number" autocomplete="off"></input></div></div>`)
+            $(e.target).closest('div').before(`<div class="col-10 my-3 py-3 d-flex rounded-pill align-items-center text-center rounded-3 bg2"><button class="w-25 btn px-0 rounded-pill bg2 d-flex justify-content-center" data-bs-toggle="dropdown" aria-expanded="false"><input name="setboothslist[${boothsum}].boothLv" class="w-75 text-center border-0 h3 m-0 bg2 c1" value="攤位等級" disabled></input><i class="fa-solid fa-chevron-down fa-lg opacity-75 ms-2 mt-3"></i></button><ul class="dropdown-menu ms-5 text-center p-0"><li><a class="dropdown-item h4 m-0" href="#">大型</a></li><li><a class="dropdown-item h4 m-0" href="#">中型</a></li><li><a class="dropdown-item h4 m-0" href="#">小型</a></li></ul><h3 class="w-25 m-0"></h3><div class="w-25"><input name="setboothslist[${boothsum}].boothPrice" class="w-50 text-center h4 m-0 border-0 border-secondary border-bottom py-2 bg2"placeholder="輸入價格" type="number" autocomplete="off"></input></div><div class="w-25"><input name="setboothslist[${boothsum}].boothsum" class="w-50 text-center h4 m-0 border-0 border-secondary border-bottom py-2 bg2"placeholder="輸入價格" type="number" autocomplete="off"></input></div></div>`)
             boothsum++
         })
 

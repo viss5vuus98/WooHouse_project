@@ -1,7 +1,9 @@
 ﻿using Fairy_project.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Fairy_project.ViewModels
 {
+
     public class CreatExhibitionViewModel
     {
         public string? exhibitName { get; set; }
